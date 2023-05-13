@@ -27,6 +27,11 @@ body {
     margin: 0 auto;
 }
 
+.freddie {
+    margin-top: 16px;
+    align-self: center;
+}
+
 .champs {
     display: flex;
     flex-direction: column;
@@ -40,6 +45,9 @@ button#publish-btn {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 12px;
 }
 
 #endorse-input {
@@ -47,6 +55,8 @@ button#publish-btn {
     background-color: #444059;
     border: none;
     border-radius: 8px;
+    color: #8F8F8F;
+    padding: 8px;
 }
 
 .endorsement-card {
