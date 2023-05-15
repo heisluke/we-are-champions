@@ -19,6 +19,7 @@ publishBtnEl.addEventListener("click", function() {
     
     push(weAreChampionsDB, inputValue)
     
+    
     clearInputFieldEl()
 })
 
