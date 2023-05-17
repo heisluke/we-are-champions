@@ -7,22 +7,59 @@ const appSettings = {
 
 const app = initializeApp(appSettings)
 const database = getDatabase(app)
-const weAreChampionsDB = ref(database, "shoppingList")
+const endorsementEntriesInDB = ref(database, "endorsementEntries")
 
 const inputFieldEl = document.getElementById("endorse-input")
-const publishBtnEl = document.getElementById("publish-btn")
-const endorsementSection = document.getElementById("endorsement-cards-holster")
+const addButtonEl = document.getElementById("publish-btn")
+const endorsementCardsHolster = document.getElementById("endorsement-cards-holster")
 
+addButtonEl.addEventListener("click", function() {
 
-publishBtnEl.addEventListener("click", function() {
     let inputValue = inputFieldEl.value
-    
-    push(weAreChampionsDB, inputValue)
-    
+    push(endorsementEntriesInDB, inputValue)
     
     clearInputFieldEl()
 })
 
+onValue(endorsementEntriesInDB, function(snapshot) {
+    if (snapshot.exists()) {
+        let itemsArray = Object.entries(snapshot.val())
+    
+        clearEntries()
+        
+        for (let i = 0; i < itemsArray.length; i++) {
+            let currentItem = itemsArray[i]
+            let currentItemID = currentItem[0]
+            let currentItemValue = currentItem[1]
+            
+            appendItemToShoppingListEl(currentItem)
+        }    
+    } else {
+        endorsementCardsHolster.innerHTML = "No items here... yet"
+    }
+})
+
+function clearEntries() {
+    endorsementCardsHolster.innerHTML = ""
+}
+
 function clearInputFieldEl() {
     inputFieldEl.value = ""
+}
+
+function appendItemToShoppingListEl(item) {
+    let itemID = item[0]
+    let itemValue = item[1]
+    
+    let newEl = document.createElement("li")
+    
+    newEl.textContent = itemValue
+    
+    newEl.addEventListener("dblclick", function() {
+        let exactLocationOfItemInDB = ref(database, `endorsementEntries/${itemID}`)
+        console.log("omo");
+        remove(exactLocationOfItemInDB)
+    })
+    
+    endorsementCardsHolster.append(newEl)
 }
